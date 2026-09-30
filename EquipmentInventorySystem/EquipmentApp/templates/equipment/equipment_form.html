@@ -1,0 +1,96 @@
+{% extends 'equipment/base.html' %}
+
+{% block title %}
+    {% if equipment %}
+        Edit Equipment
+    {% else %}
+        Add Equipment
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+
+<div class="content-box">
+
+    <h1>
+        {% if equipment %}
+            Edit Laboratory Equipment
+        {% else %}
+            Add Laboratory Equipment
+        {% endif %}
+    </h1>
+
+    <p class="form-description">
+        Enter the details of the laboratory equipment below.
+    </p>
+
+    <form method="POST" class="equipment-form">
+        {% csrf_token %}
+
+        <div class="form-grid">
+
+            <div class="form-group">
+                <label>Equipment Name:</label>
+                <input type="text" name="equipment_name"
+                       value="{{ equipment.equipment_name|default:'' }}" required>
+            </div>
+
+            <div class="form-group">
+                <label>Category:</label>
+                <input type="text" name="category"
+                       value="{{ equipment.category|default:'' }}" required>
+            </div>
+
+            <div class="form-group">
+                <label>Brand:</label>
+                <input type="text" name="brand"
+                       value="{{ equipment.brand|default:'' }}" required>
+            </div>
+
+            <div class="form-group">
+                <label>Quantity:</label>
+                <input type="number" name="quantity"
+                       value="{{ equipment.quantity|default:'' }}" min="1" required>
+            </div>
+
+            <div class="form-group">
+                <label>Condition:</label>
+                <input type="text" name="condition"
+                       value="{{ equipment.condition|default:'' }}" required>
+            </div>
+
+            <div class="form-group">
+                <label>Status:</label>
+                <input type="text" name="status"
+                       value="{{ equipment.status|default:'' }}" required>
+            </div>
+
+            <div class="form-group full-width">
+                <label>Location:</label>
+                <input type="text" name="location"
+                       value="{{ equipment.location|default:'' }}" required>
+            </div>
+
+        </div>
+
+        <div class="form-actions">
+
+            <button type="submit" class="button">
+                {% if equipment %}
+                    Update Equipment
+                {% else %}
+                    Save Equipment
+                {% endif %}
+            </button>
+
+            <a href="{% url 'equipment_list' %}" class="cancel-button">
+                Cancel
+            </a>
+
+        </div>
+
+    </form>
+
+</div>
+
+{% endblock %}

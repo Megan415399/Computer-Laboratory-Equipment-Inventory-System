@@ -1,0 +1,565 @@
+body {
+    margin: 0;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background-color: #f3f7fa;
+    color: #425466;
+}
+
+/* =========================
+   SIDEBAR
+   ========================= */
+
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 240px;
+    height: 100vh;
+    background-color: #162a3a;
+    padding: 32px 20px;
+    box-sizing: border-box;
+    z-index: 10;
+}
+
+.sidebar h2 {
+    color: white;
+    margin: 0 0 5px 0;
+    font-size: 23px;
+}
+
+.sidebar h3 {
+    color: #a9bfce;
+    margin: 0;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.sidebar-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.sidebar-title h2 {
+    margin: 0 0 5px 0;
+}
+
+.sidebar-title h3 {
+    margin: 0;
+}
+
+.computer-icon {
+    width: 28px;
+    height: 28px;
+    color: #8fc4e2;
+    flex-shrink: 0;
+}
+
+.sidebar-menu {
+    margin-top: 42px;
+}
+
+.sidebar-menu a {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    color: #e8f0f5;
+    text-decoration: none;
+    padding: 13px 8px;
+    margin-bottom: 8px;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+.sidebar-menu a:hover {
+    background-color: #2878a8;
+    color: white;
+}
+
+.menu-icon {
+    width: 20px;
+    height: 20px;
+    color: #8fc4e2;
+    flex-shrink: 0;
+}
+
+.sidebar-menu a:hover .menu-icon {
+    color: white;
+}
+
+/* =========================
+   MAIN CONTENT
+   ========================= */
+
+.main-content {
+    margin-left: 240px;
+    padding: 50px;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+
+/* =========================
+   CONTENT CARD
+   ========================= */
+
+.content-box {
+    background-color: #ffffff;
+    padding: 38px;
+    border-radius: 16px;
+    box-shadow: 0 5px 20px rgba(22, 42, 58, 0.08);
+}
+
+/* =========================
+   HEADINGS
+   ========================= */
+
+h1 {
+    color: #163247;
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 30px;
+    font-weight: 600;
+}
+
+h2 {
+    color: #163247;
+}
+
+/* =========================
+   PARAGRAPHS
+   ========================= */
+
+p {
+    line-height: 1.6;
+}
+
+/* =========================
+   HOMEPAGE
+   ========================= */
+
+.home-content {
+    text-align: center;
+    padding: 55px 70px;
+}
+
+.home-icon {
+    font-size: 58px;
+    margin-bottom: 18px;
+}
+
+.home-content h1 {
+    font-size: 32px;
+    line-height: 1.3;
+    margin: 0 auto 18px auto;
+    color: #163247;
+    max-width: 850px;
+}
+
+.welcome-text {
+    font-size: 17px;
+    color: #425466;
+    margin-bottom: 8px;
+}
+
+.description-text {
+    font-size: 15px;
+    color: #71808c;
+    max-width: 650px;
+    margin: 0 auto 30px auto;
+    line-height: 1.7;
+}
+
+.home-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+}
+
+/* =========================
+   BUTTONS
+   ========================= */
+
+.button {
+    display: inline-block;
+    background-color: #2878a8;
+    color: white;
+    text-decoration: none;
+    padding: 11px 20px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+.button:hover {
+    background-color: #216589;
+}
+
+.secondary-button {
+    display: inline-block;
+    background-color: white;
+    color: #2878a8;
+    text-decoration: none;
+    padding: 10px 20px;
+    border: 1px solid #2878a8;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+.secondary-button:hover {
+    background-color: #eef6fa;
+}
+
+/* =========================
+   EQUIPMENT TABLE
+   ========================= */
+
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-top: 22px;
+    overflow: hidden;
+    border: 1px solid #d7e1e8;
+    border-radius: 10px;
+}
+
+th {
+    background-color: #162a3a;
+    color: white;
+    padding: 14px 12px;
+    text-align: left;
+    font-size: 14px;
+    border-right: 1px solid #354b5d;
+}
+
+td {
+    padding: 14px 12px;
+    border-right: 1px solid #d7e1e8;
+    border-bottom: 1px solid #d7e1e8;
+    font-size: 14px;
+}
+
+th:last-child,
+td:last-child {
+    border-right: none;
+}
+
+tr:last-child td {
+    border-bottom: none;
+}
+
+tr:hover td {
+    background-color: #f3f8fb;
+}
+
+/* =========================
+   TABLE ACTION LINKS
+   ========================= */
+
+td a {
+    color: #2878a8;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+td a:hover {
+    color: #216589;
+    text-decoration: underline;
+}
+
+.actions {
+    white-space: nowrap;
+}
+
+.edit-button,
+.delete-button {
+    display: inline-block;
+    padding: 6px 10px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.edit-button {
+    background-color: #2878a8;
+    color: white !important;
+}
+
+.edit-button:hover {
+    background-color: #216589;
+    text-decoration: none !important;
+}
+
+.delete-button {
+    background-color: #c94b4b;
+    color: white !important;
+    margin-left: 5px;
+}
+
+.delete-button:hover {
+    background-color: #a83d3d;
+    text-decoration: none !important;
+}
+
+/* =========================
+   EQUIPMENT TABLE SPACING
+   ========================= */
+
+th:nth-child(1),
+td:nth-child(1) {
+    width: 8%;
+}
+
+th:nth-child(2),
+td:nth-child(2) {
+    width: 14%;
+    white-space: nowrap;
+}
+
+th:nth-child(3),
+td:nth-child(3) {
+    width: 13%;
+    white-space: nowrap;
+}
+
+th:nth-child(4),
+td:nth-child(4) {
+    width: 10%;
+}
+
+th:nth-child(5),
+td:nth-child(5) {
+    width: 8%;
+}
+
+th:nth-child(6),
+td:nth-child(6) {
+    width: 10%;
+}
+
+th:nth-child(7),
+td:nth-child(7) {
+    width: 10%;
+}
+
+th:nth-child(8),
+td:nth-child(8) {
+    width: 15%;
+    white-space: nowrap;
+}
+
+th:nth-child(9),
+td:nth-child(9) {
+    width: 12%;
+}
+
+/* =========================
+   FORMS
+   ========================= */
+
+form {
+    background-color: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(22, 42, 58, 0.08);
+}
+
+form p {
+    margin-bottom: 18px;
+}
+
+label {
+    font-weight: bold;
+    color: #34495a;
+}
+
+input,
+select {
+    width: 100%;
+    padding: 11px;
+    margin-top: 7px;
+    border: 1px solid #d7e1e8;
+    border-radius: 7px;
+    box-sizing: border-box;
+    font-family: "Segoe UI", Arial, sans-serif;
+    font-size: 14px;
+}
+
+input:focus,
+select:focus {
+    outline: none;
+    border-color: #2878a8;
+}
+
+/* =========================
+   EQUIPMENT FORM
+   ========================= */
+
+.form-description {
+    color: #71808c;
+    margin-bottom: 25px;
+}
+
+.equipment-form {
+    box-shadow: none;
+    padding: 0;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    margin-bottom: 7px;
+}
+
+.form-group input {
+    margin: 0;
+}
+
+.full-width {
+    grid-column: 1 / 3;
+}
+
+.form-actions {
+    margin-top: 25px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.cancel-button {
+    display: inline-block;
+    color: #526473;
+    text-decoration: none;
+    padding: 10px 18px;
+    border: 1px solid #d7e1e8;
+    border-radius: 7px;
+}
+
+.cancel-button:hover {
+    background-color: #f3f7fa;
+}
+
+/* =========================
+   DELETE CONFIRMATION
+   ========================= */
+
+strong {
+    color: #163247;
+}
+
+form .delete-button,
+form .cancel-button {
+    display: inline-block;
+    box-sizing: border-box;
+    min-width: 105px;
+    text-align: center;
+    padding: 10px 18px;
+    font-family: "Segoe UI", Arial, sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 7px;
+}
+
+form .delete-button {
+    border: none;
+    cursor: pointer;
+}
+
+form .cancel-button {
+    color: #526473;
+    text-decoration: none;
+    border: 1px solid #d7e1e8;
+    margin-left: 8px;
+}
+
+form .cancel-button:hover {
+    background-color: #f3f7fa;
+}
+
+/* =========================
+   RESPONSIVE LAYOUT
+   SIDEBAR STAYS ON LEFT
+   ========================= */
+
+@media (max-width: 900px) {
+
+    .sidebar {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 220px;
+        height: 100vh;
+        padding: 28px 15px;
+        box-sizing: border-box;
+    }
+
+    .main-content {
+        margin-left: 220px;
+        padding: 30px;
+        min-height: 100vh;
+        box-sizing: border-box;
+    }
+
+    .content-box {
+        padding: 28px;
+        overflow-x: auto;
+    }
+
+    .sidebar-title {
+        gap: 8px;
+    }
+
+    .sidebar-title h2 {
+        font-size: 20px;
+    }
+
+    .sidebar-title h3 {
+        font-size: 14px;
+    }
+
+    .sidebar-menu {
+        margin-top: 35px;
+    }
+
+    .sidebar-menu a {
+        padding: 11px 8px;
+    }
+
+    .home-content {
+        padding: 45px 30px;
+    }
+
+    .home-content h1 {
+        font-size: 27px;
+    }
+
+    .home-actions {
+        flex-wrap: wrap;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .full-width {
+        grid-column: auto;
+    }
+
+    table {
+        min-width: 850px;
+    }
+}

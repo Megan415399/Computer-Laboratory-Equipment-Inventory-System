@@ -1,0 +1,36 @@
+{% extends 'equipment/base.html' %}
+
+{% block title %}
+Delete Equipment
+{% endblock %}
+
+{% block content %}
+
+<div class="content-box">
+
+    <h1>Delete Laboratory Equipment</h1>
+
+    <p>
+        Are you sure you want to delete
+        <strong>{{ equipment.equipment_name }}</strong>?
+    </p>
+
+    <p>
+        This action cannot be undone.
+    </p>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <button type="submit" class="delete-button">
+            Yes, Delete
+        </button>
+
+        <a href="{% url 'equipment_list' %}" class="cancel-button">
+            Cancel
+        </a>
+    </form>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'equipment/base.html' %}
+
+{% block title %}
+Computer Laboratory Equipment Inventory System
+{% endblock %}
+
+{% block content %}
+
+<div class="content-box home-content">
+
+    <div class="home-icon">💻</div>
+
+    <h1>Computer Laboratory Equipment Inventory System</h1>
+
+    <p class="welcome-text">
+        Welcome to the Computer Laboratory Equipment Inventory System.
+    </p>
+
+    <p class="description-text">
+        Manage and monitor laboratory equipment records,
+        including quantity, condition, status, and location.
+    </p>
+
+    <div class="home-actions">
+
+        <a href="{% url 'equipment_list' %}" class="button">
+            View Equipment
+        </a>
+
+        <a href="{% url 'equipment_create' %}" class="secondary-button">
+            Add Equipment
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}
