@@ -563,3 +563,136 @@ form .cancel-button:hover {
         min-width: 850px;
     }
 }
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 23px;
+}
+
+.page-header h1 {
+    margin: 0;
+}
+
+/* Center table headings and cell content */
+table th,
+table td {
+    text-align: center;
+    vertical-align: middle;
+}
+
+/* Keep Edit and Delete buttons centered */
+.actions {
+    text-align: center;
+}
+
+/* =========================
+   PAGE HEADER
+   ========================= */
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 23px;
+}
+
+.page-header h1 {
+    margin: 0;
+}
+
+/* Center table headings and cells */
+
+table th,
+table td {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.actions {
+    text-align: center;
+}
+
+/* =========================
+   RESPONSIVE LAYOUT
+   ========================= */
+
+@media (max-width: 768px) {
+    .main-content {
+        padding: 20px;
+        min-width: 0;
+    }
+
+    .content-box {
+        padding: 20px;
+        min-width: 0;
+    }
+
+    .page-header {
+        flex-wrap: wrap;
+        align-items: center;
+    }
+
+    .page-header h1 {
+        font-size: 24px;
+    }
+
+    .page-header .button {
+        white-space: nowrap;
+        flex-shrink: 0;
+    }
+
+    table {
+        min-width: 850px;
+    }
+}
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 23px;
+}
+
+.page-header h1 {
+    margin: 0;
+    font-size: 30px;
+}
+
+.page-header .button {
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+    .main-content {
+        padding: 20px;
+    }
+
+    .content-box {
+        padding: 20px;
+        min-width: 0;
+    }
+
+    .page-header {
+        flex-wrap: nowrap;
+        gap: 8px;
+    }
+
+    .page-header h1 {
+        font-size: 22px;
+    }
+
+    .page-header .button {
+        padding: 10px 12px;
+        font-size: 13px;
+    }
+
+    table {
+        min-width: 850px;
+    }
+}
+
