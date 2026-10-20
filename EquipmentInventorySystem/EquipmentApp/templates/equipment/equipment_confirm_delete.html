@@ -1,34 +1,37 @@
 {% extends 'equipment/base.html' %}
 
 {% block title %}
-Delete Equipment
+Delete Equipment | Computer Laboratory Equipment Inventory System
 {% endblock %}
 
 {% block content %}
 
-<div class="content-box">
+<div class="content-box form-box delete-box">
 
-    <h1>Delete Laboratory Equipment</h1>
+    <div class="confirm-icon"><i class="bi bi-trash"></i></div>
 
-    <p>
-        Are you sure you want to delete
-        <strong>{{ equipment.equipment_name }}</strong>?
+    <h1>Delete this equipment?</h1>
+
+    <p class="delete-lead">
+        <strong>{{ equipment.equipment_name }}</strong> will be removed from the inventory. You can't undo this.
     </p>
 
-    <p>
-        This action cannot be undone.
-    </p>
+    <dl class="delete-summary">
+        <div><dt>Equipment ID</dt><dd>#{{ equipment.equipment_id }}</dd></div>
+        <div><dt>Brand</dt><dd>{{ equipment.brand }}</dd></div>
+        <div><dt>Category</dt><dd>{{ equipment.category }}</dd></div>
+        <div><dt>Quantity</dt><dd>{{ equipment.quantity }}</dd></div>
+        <div><dt>Location</dt><dd>{{ equipment.location }}</dd></div>
+    </dl>
 
-    <form method="POST">
+    <form method="POST" class="equipment-form delete-actions">
         {% csrf_token %}
 
-        <button type="submit" class="delete-button">
-            Yes, Delete
-        </button>
+        <a href="{% url 'equipment_list' %}" class="cancel-button">Keep it</a>
 
-        <a href="{% url 'equipment_list' %}" class="cancel-button">
-            Cancel
-        </a>
+        <button type="submit" class="delete-button confirm-delete">
+            <i class="bi bi-trash me-1"></i> Delete equipment
+        </button>
     </form>
 
 </div>

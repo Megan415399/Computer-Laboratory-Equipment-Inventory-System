@@ -1,38 +1,142 @@
 {% extends 'equipment/base.html' %}
 
 {% block title %}
-Computer Laboratory Equipment Inventory System
+Home | Computer Laboratory Equipment Inventory System
 {% endblock %}
 
 {% block content %}
 
-<div class="content-box home-content">
+<!-- Hero -->
+<section class="hero">
+    <div class="hero-text">
+        <h1>Know what's in your computer lab, and what needs fixing.</h1>
 
-    <div class="home-icon">💻</div>
+        <p class="hero-lead">
+            Keep every monitor, keyboard, system unit, and printer in one list.
+            See what is available, what is damaged, and where each item is kept.
+        </p>
 
-    <h1>Computer Laboratory Equipment Inventory System</h1>
-
-    <p class="welcome-text">
-        Welcome to the Computer Laboratory Equipment Inventory System.
-    </p>
-
-    <p class="description-text">
-        Manage and monitor laboratory equipment records,
-        including quantity, condition, status, and location.
-    </p>
-
-    <div class="home-actions">
-
-        <a href="{% url 'equipment_list' %}" class="button">
-            View Equipment
-        </a>
-
-        <a href="{% url 'equipment_create' %}" class="secondary-button">
-            Add Equipment
-        </a>
-
+        <div class="hero-actions">
+            <a href="{% url 'equipment_list' %}" class="hero-btn hero-btn-primary">
+                <i class="bi bi-box-seam"></i>View inventory
+            </a>
+            <a href="{% url 'equipment_create' %}" class="hero-btn hero-btn-ghost">
+                <i class="bi bi-plus-circle"></i>Add equipment
+            </a>
+        </div>
     </div>
 
+    <!-- Decorative preview of how items look in the system -->
+    <div class="hero-visual" aria-hidden="true">
+        <div class="rack-row">
+            <i class="bi bi-display"></i>
+            <div><strong>Monitor</strong><small>Computer Laboratory 1</small></div>
+            <span class="dot dot-ok"></span>
+        </div>
+        <div class="rack-row">
+            <i class="bi bi-keyboard"></i>
+            <div><strong>Keyboard</strong><small>Computer Laboratory 2</small></div>
+            <span class="dot dot-ok"></span>
+        </div>
+        <div class="rack-row">
+            <i class="bi bi-printer"></i>
+            <div><strong>Printer</strong><small>Technician Room</small></div>
+            <span class="dot dot-repair"></span>
+        </div>
+        <div class="rack-row">
+            <i class="bi bi-pc"></i>
+            <div><strong>System Unit</strong><small>Computer Laboratory 3</small></div>
+            <span class="dot dot-damaged"></span>
+        </div>
+    </div>
+</section>
+
+<!-- Dashboard Stats -->
+<div class="stats-grid">
+    <div class="stat-card info">
+        <div class="stat-info">
+            <h3>Total equipment</h3>
+            <p>{{ total_count|default:"0" }}</p>
+        </div>
+        <div class="stat-icon">
+            <i class="bi bi-laptop"></i>
+        </div>
+    </div>
+
+    <div class="stat-card success">
+        <div class="stat-info">
+            <h3>Available</h3>
+            <p>{{ available_count|default:"0" }}</p>
+        </div>
+        <div class="stat-icon">
+            <i class="bi bi-check-circle"></i>
+        </div>
+    </div>
+
+    <div class="stat-card warning">
+        <div class="stat-info">
+            <h3>Under maintenance</h3>
+            <p>{{ maintenance_count|default:"0" }}</p>
+        </div>
+        <div class="stat-icon">
+            <i class="bi bi-tools"></i>
+        </div>
+    </div>
+
+    <div class="stat-card danger">
+        <div class="stat-info">
+            <h3>Damaged</h3>
+            <p>{{ damaged_count|default:"0" }}</p>
+        </div>
+        <div class="stat-icon">
+            <i class="bi bi-exclamation-triangle"></i>
+        </div>
+    </div>
 </div>
+
+<!-- Features -->
+<div class="feature-grid">
+    <div class="feature-card">
+        <div class="feature-icon"><i class="bi bi-people"></i></div>
+        <h3>Made for the lab team</h3>
+        <p>Technicians, staff, and IT administrators all work from the same up-to-date list.</p>
+    </div>
+
+    <div class="feature-card">
+        <div class="feature-icon"><i class="bi bi-pencil-square"></i></div>
+        <h3>Add, edit, and remove</h3>
+        <p>Record new equipment, update its condition, or remove old records in a few clicks.</p>
+    </div>
+
+    <div class="feature-card">
+        <div class="feature-icon"><i class="bi bi-geo-alt"></i></div>
+        <h3>Know where it is</h3>
+        <p>Each item shows its location, brand, quantity, and condition, so nothing gets lost.</p>
+    </div>
+</div>
+
+<!-- Recently added (shows only when the view sends `recent_equipment`) -->
+{% if recent_equipment %}
+<section class="content-box recent-box">
+    <div class="page-header">
+        <h2>Recently added</h2>
+        <a href="{% url 'equipment_list' %}" class="secondary-button">See all</a>
+    </div>
+
+    <ul class="recent-list">
+        {% for item in recent_equipment %}
+        <li>
+            <div>
+                <strong>{{ item.equipment_name }}</strong>
+                <small>{{ item.brand }} &middot; {{ item.location }}</small>
+            </div>
+            <span class="badge {% if item.status == 'Available' %}badge-success{% elif item.status == 'In Use' %}badge-info{% else %}badge-warning{% endif %}">
+                {{ item.status }}
+            </span>
+        </li>
+        {% endfor %}
+    </ul>
+</section>
+{% endif %}
 
 {% endblock %}

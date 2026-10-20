@@ -1,69 +1,220 @@
 {% extends 'equipment/base.html' %}
 
 {% block title %}
-Equipment List - Computer Laboratory Equipment Inventory System
+Equipment List | Computer Laboratory Equipment Inventory System
 {% endblock %}
 
 {% block content %}
 
 <div class="content-box">
 
-    <div class="page-header">
-        <h1>Equipment List</h1>
+    <!-- Top Toolbar Header -->
+    <div class="table-toolbar">
+        <div class="toolbar-title">
+            <h1>Equipment list</h1>
+            <p class="result-count">
+                {% if has_filters %}
+                    {{ total_results }} result{{ total_results|pluralize }} found
+                {% else %}
+                    {{ total_results }} item{{ total_results|pluralize }} in the inventory
+                {% endif %}
+            </p>
+        </div>
 
-        <a href="{% url 'equipment_create' %}" class="button">
-            ＋ Add Equipment
-        </a>
+        <div class="toolbar-actions">
+            <a href="{% url 'equipment_create' %}" class="button add-btn">
+                <i class="bi bi-plus-lg me-1"></i> Add equipment
+            </a>
+        </div>
     </div>
 
-    <table>
-        <tr>
-            <th>Equipment ID</th>
-            <th>Equipment Name</th>
-            <th>Category</th>
-            <th>Brand</th>
-            <th>Quantity</th>
-            <th>Condition</th>
-            <th>Status</th>
-            <th>Location</th>
-            <th>Action</th>
-        </tr>
+    <!-- Search and filters -->
+    <form method="GET" action="{% url 'equipment_list' %}" class="search-form filter-bar">
+        <input type="text" name="q" value="{{ query }}"
+               placeholder="Search by name, brand, or category..."
+               aria-label="Search equipment">
 
-        {% for equipment in equipments %}
+        <select name="category" aria-label="Filter by category" onchange="this.form.submit()">
+            <option value="">All categories</option>
+            {% for c in categories %}
+                <option value="{{ c }}" {% if c == category %}selected{% endif %}>{{ c }}</option>
+            {% endfor %}
+        </select>
 
-        <tr>
-            <td>{{ equipment.equipment_id }}</td>
-            <td>{{ equipment.equipment_name }}</td>
-            <td>{{ equipment.category }}</td>
-            <td>{{ equipment.brand }}</td>
-            <td>{{ equipment.quantity }}</td>
-            <td>{{ equipment.condition }}</td>
-            <td>{{ equipment.status }}</td>
-            <td>{{ equipment.location }}</td>
+        <select name="status" aria-label="Filter by status" onchange="this.form.submit()">
+            <option value="">All statuses</option>
+            {% for s in statuses %}
+                <option value="{{ s }}" {% if s == status %}selected{% endif %}>{{ s }}</option>
+            {% endfor %}
+        </select>
 
-            <td class="actions">
-                <a href="{% url 'equipment_update' equipment.equipment_id %}"
-                   class="edit-button">
-                    Edit
-                </a>
+        <select name="condition" aria-label="Filter by condition" onchange="this.form.submit()">
+            <option value="">All conditions</option>
+            {% for c in conditions %}
+                <option value="{{ c }}" {% if c == condition %}selected{% endif %}>{{ c }}</option>
+            {% endfor %}
+        </select>
 
-                <a href="{% url 'equipment_delete' equipment.equipment_id %}"
-                   class="delete-button">
-                    Delete
-                </a>
-            </td>
-        </tr>
+        <button type="submit" class="button search-btn" aria-label="Search">
+            <i class="bi bi-search"></i>
+        </button>
 
-        {% empty %}
+        {% if has_filters %}
+            <a href="{% url 'equipment_list' %}" class="secondary-button clear-btn">Clear</a>
+        {% endif %}
+    </form>
 
-        <tr>
-            <td colspan="9">No equipment records found.</td>
-        </tr>
+    <!-- Equipment Table -->
+    <div class="table-responsive">
+        <table>
+            <thead>
+                <tr>
+                    <th>Equipment ID</th>
+                    <th>Equipment name</th>
+                    <th>Category</th>
+                    <th>Brand</th>
+                    <th>Quantity</th>
+                    <th>Condition</th>
+                    <th>Status</th>
+                    <th>Location</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for equipment in page_obj %}
+                <tr>
+                    <td class="id-cell">#{{ equipment.equipment_id }}</td>
+                    <td><strong>{{ equipment.equipment_name }}</strong></td>
+                    <td>{{ equipment.category }}</td>
+                    <td>{{ equipment.brand }}</td>
+                    <td><span class="quantity-badge">{{ equipment.quantity }}</span></td>
 
-        {% endfor %}
+                    <!-- Condition with badges -->
+                    <td>
+                        {% if equipment.condition == 'Good' %}
+                            <span class="badge badge-success">Good</span>
+                        {% elif equipment.condition == 'Damaged' %}
+                            <span class="badge badge-danger">Damaged</span>
+                        {% else %}
+                            <span class="badge badge-warning">{{ equipment.condition }}</span>
+                        {% endif %}
+                    </td>
 
-    </table>
+                    <!-- Status with badges -->
+                    <td>
+                        {% if equipment.status == 'Available' %}
+                            <span class="badge badge-success">Available</span>
+                        {% elif equipment.status == 'In Use' %}
+                            <span class="badge badge-info">In Use</span>
+                        {% else %}
+                            <span class="badge badge-warning">{{ equipment.status }}</span>
+                        {% endif %}
+                    </td>
+
+                    <td>{{ equipment.location }}</td>
+
+                    <td class="actions">
+                        <a href="{% url 'equipment_update' equipment.equipment_id %}" class="edit-button"
+                           title="Edit {{ equipment.equipment_name }}">
+                            <i class="bi bi-pencil-square"></i> Edit
+                        </a>
+                        <a href="{% url 'equipment_delete' equipment.equipment_id %}" class="delete-button"
+                           data-delete data-name="{{ equipment.equipment_name }}"
+                           title="Delete {{ equipment.equipment_name }}">
+                            <i class="bi bi-trash"></i> Delete
+                        </a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="9" class="empty-state">
+                        <i class="bi bi-inbox"></i>
+                        {% if has_filters %}
+                            <strong>No equipment matches your search</strong>
+                            <span>Try a different name, brand, category, or filter.</span>
+                            <a href="{% url 'equipment_list' %}" class="secondary-button">Clear search</a>
+                        {% else %}
+                            <strong>No equipment yet</strong>
+                            <span>Add your first item to start tracking the lab.</span>
+                            <a href="{% url 'equipment_create' %}" class="button">
+                                <i class="bi bi-plus-lg me-1"></i> Add equipment
+                            </a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Pagination -->
+    {% if page_obj.has_other_pages %}
+    <nav class="pagination-bar" aria-label="Pages">
+        {% if page_obj.has_previous %}
+            <a href="?{% if querystring %}{{ querystring }}&{% endif %}page={{ page_obj.previous_page_number }}"
+               class="secondary-button">Previous</a>
+        {% else %}
+            <span class="secondary-button disabled">Previous</span>
+        {% endif %}
+
+        <span class="page-info">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+
+        {% if page_obj.has_next %}
+            <a href="?{% if querystring %}{{ querystring }}&{% endif %}page={{ page_obj.next_page_number }}"
+               class="secondary-button">Next</a>
+        {% else %}
+            <span class="secondary-button disabled">Next</span>
+        {% endif %}
+    </nav>
+    {% endif %}
 
 </div>
+
+<!-- Delete confirmation (posts straight to the delete view) -->
+<dialog id="deleteDialog" class="confirm-dialog" aria-labelledby="deleteTitle">
+    <div class="confirm-body">
+        <div class="confirm-icon"><i class="bi bi-trash"></i></div>
+        <h2 id="deleteTitle">Delete this equipment?</h2>
+        <p>
+            <strong id="deleteName">This item</strong> will be removed from the inventory.
+            You can't undo this.
+        </p>
+    </div>
+    <form method="POST" id="deleteForm" class="confirm-actions">
+        {% csrf_token %}
+        <button type="button" class="cancel-button" id="deleteCancel">Keep it</button>
+        <button type="submit" class="delete-button confirm-delete">
+            <i class="bi bi-trash"></i> Delete
+        </button>
+    </form>
+</dialog>
+
+<script>
+    (function () {
+        var dialog = document.getElementById("deleteDialog");
+        if (!dialog || typeof dialog.showModal !== "function") return;
+
+        var nameEl = document.getElementById("deleteName");
+        var form = document.getElementById("deleteForm");
+
+        document.querySelectorAll("[data-delete]").forEach(function (link) {
+            link.addEventListener("click", function (e) {
+                e.preventDefault();
+                nameEl.textContent = link.dataset.name || "This item";
+                form.setAttribute("action", link.getAttribute("href"));
+                dialog.showModal();
+            });
+        });
+
+        document.getElementById("deleteCancel").addEventListener("click", function () {
+            dialog.close();
+        });
+
+        // Click on the dark backdrop closes the dialog
+        dialog.addEventListener("click", function (e) {
+            if (e.target === dialog) dialog.close();
+        });
+    })();
+</script>
 
 {% endblock %}

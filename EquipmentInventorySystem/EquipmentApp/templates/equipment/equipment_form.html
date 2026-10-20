@@ -1,27 +1,31 @@
 {% extends 'equipment/base.html' %}
 
 {% block title %}
-    {% if equipment %}
-        Edit Equipment
-    {% else %}
-        Add Equipment
-    {% endif %}
+    {% if equipment %}Edit Equipment{% else %}Add Equipment{% endif %} | Computer Laboratory Equipment Inventory System
 {% endblock %}
 
 {% block content %}
 
-<div class="content-box">
+<div class="content-box form-box">
+
+    <nav class="breadcrumb-trail" aria-label="Breadcrumb">
+        <a href="{% url 'equipment_list' %}"><i class="bi bi-arrow-left"></i> Equipment list</a>
+    </nav>
 
     <h1>
         {% if equipment %}
-            Edit Laboratory Equipment
+            <i class="bi bi-pencil-square me-2"></i> Edit equipment
         {% else %}
-            Add Laboratory Equipment
+            <i class="bi bi-plus-circle me-2"></i> Add equipment
         {% endif %}
     </h1>
 
     <p class="form-description">
-        Enter the details of the laboratory equipment below.
+        {% if equipment %}
+            Update the details of <strong>{{ equipment.equipment_name }}</strong> (Equipment ID #{{ equipment.equipment_id }}).
+        {% else %}
+            Fill in the details of the new laboratory equipment. Fields marked with <span class="required-hint">*</span> are required.
+        {% endif %}
     </p>
 
     <form method="POST" class="equipment-form">
@@ -29,46 +33,68 @@
 
         <div class="form-grid">
 
-            <div class="form-group">
-                <label>Equipment Name:</label>
-                <input type="text" name="equipment_name"
-                       value="{{ equipment.equipment_name|default:'' }}" required>
-            </div>
-
-            <div class="form-group">
-                <label>Category:</label>
-                <input type="text" name="category"
-                       value="{{ equipment.category|default:'' }}" required>
-            </div>
-
-            <div class="form-group">
-                <label>Brand:</label>
-                <input type="text" name="brand"
-                       value="{{ equipment.brand|default:'' }}" required>
-            </div>
-
-            <div class="form-group">
-                <label>Quantity:</label>
-                <input type="number" name="quantity"
-                       value="{{ equipment.quantity|default:'' }}" min="1" required>
-            </div>
-
-            <div class="form-group">
-                <label>Condition:</label>
-                <input type="text" name="condition"
-                       value="{{ equipment.condition|default:'' }}" required>
-            </div>
-
-            <div class="form-group">
-                <label>Status:</label>
-                <input type="text" name="status"
-                       value="{{ equipment.status|default:'' }}" required>
-            </div>
+            <h2 class="form-section full-width">What is it?</h2>
 
             <div class="form-group full-width">
-                <label>Location:</label>
-                <input type="text" name="location"
-                       value="{{ equipment.location|default:'' }}" required>
+                <label for="id_equipment_name" class="required"><i class="bi bi-laptop me-1"></i> Equipment name</label>
+                <input type="text" id="id_equipment_name" name="equipment_name" maxlength="100"
+                       value="{{ equipment.equipment_name|default:'' }}"
+                       placeholder="e.g. Monitor, Keyboard, System Unit" required>
+            </div>
+
+            <div class="form-group">
+                <label for="id_category" class="required"><i class="bi bi-tag me-1"></i> Category</label>
+                <input type="text" id="id_category" name="category" maxlength="100" list="categoryOptions"
+                       value="{{ equipment.category|default:'' }}"
+                       placeholder="Pick one or type your own" autocomplete="off" required>
+                <datalist id="categoryOptions">
+                    {% for option in category_options %}
+                        <option value="{{ option }}"></option>
+                    {% endfor %}
+                </datalist>
+            </div>
+
+            <div class="form-group">
+                <label for="id_brand" class="required"><i class="bi bi-shield-check me-1"></i> Brand</label>
+                <input type="text" id="id_brand" name="brand" maxlength="100"
+                       value="{{ equipment.brand|default:'' }}"
+                       placeholder="e.g. Acer, Dell, HP" required>
+            </div>
+
+            <h2 class="form-section full-width">Stock and condition</h2>
+
+            <div class="form-group">
+                <label for="id_quantity" class="required"><i class="bi bi-123 me-1"></i> Quantity</label>
+                <input type="number" id="id_quantity" name="quantity" min="0" step="1"
+                       value="{% if equipment %}{{ equipment.quantity }}{% else %}1{% endif %}"
+                       placeholder="e.g. 10" required>
+            </div>
+
+            <div class="form-group">
+                <label for="id_location" class="required"><i class="bi bi-geo-alt me-1"></i> Location</label>
+                <input type="text" id="id_location" name="location" maxlength="100"
+                       value="{{ equipment.location|default:'' }}"
+                       placeholder="e.g. Computer Laboratory 1" required>
+            </div>
+
+            <div class="form-group">
+                <label for="id_condition" class="required"><i class="bi bi-heart-pulse me-1"></i> Condition</label>
+                <select id="id_condition" name="condition" required>
+                    <option value="" disabled {% if not equipment %}selected{% endif %}>Select condition</option>
+                    <option value="Good" {% if equipment.condition == 'Good' %}selected{% endif %}>Good</option>
+                    <option value="Needs Repair" {% if equipment.condition == 'Needs Repair' %}selected{% endif %}>Needs Repair</option>
+                    <option value="Damaged" {% if equipment.condition == 'Damaged' %}selected{% endif %}>Damaged</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="id_status" class="required"><i class="bi bi-toggle-on me-1"></i> Status</label>
+                <select id="id_status" name="status" required>
+                    <option value="" disabled {% if not equipment %}selected{% endif %}>Select status</option>
+                    <option value="Available" {% if equipment.status == 'Available' %}selected{% endif %}>Available</option>
+                    <option value="In Use" {% if equipment.status == 'In Use' %}selected{% endif %}>In Use</option>
+                    <option value="Under Maintenance" {% if equipment.status == 'Under Maintenance' %}selected{% endif %}>Under Maintenance</option>
+                </select>
             </div>
 
         </div>
@@ -76,11 +102,8 @@
         <div class="form-actions">
 
             <button type="submit" class="button">
-                {% if equipment %}
-                    Update Equipment
-                {% else %}
-                    Save Equipment
-                {% endif %}
+                <i class="bi bi-check-lg me-1"></i>
+                {% if equipment %}Save changes{% else %}Save equipment{% endif %}
             </button>
 
             <a href="{% url 'equipment_list' %}" class="cancel-button">
